@@ -10,6 +10,10 @@ let player = {};
 let keys = {};
 let animationId;
 
+const personagemSprite = new Image();
+personagemSprite.src = './assets/characters/personagem.png';
+
+
 // Configurações do jogo
 const GAME_CONFIG = {
     canvas: {
@@ -34,8 +38,8 @@ class Player {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.width = GAME_CONFIG.player.width;
-        this.height = GAME_CONFIG.player.height;
+        this.width = 60;
+        this.height = 60;
         this.velocityX = 0;
         this.velocityY = 0;
         this.onGround = false;
@@ -58,16 +62,16 @@ class Player {
 
         // Pulo
         if (this.onGround) {
-    if (keys['ArrowUp'] || keys['w']) {
-        this.velocityY = -GAME_CONFIG.player.jumpPower; // Pulo normal
-        this.onGround = false;
-        playSound('jump');
-    } else if (keys['Shift']) {
-        this.velocityY = -GAME_CONFIG.player.jumpPower * 1.5; // Pulo alto
-        this.onGround = false;
-        playSound('jump');
-    }
-}
+            if (keys['ArrowUp'] || keys['w']) {
+                this.velocityY = -GAME_CONFIG.player.jumpPower; // Pulo normal
+                this.onGround = false;
+                playSound('jump');
+            } else if (keys['Shift']) {
+                this.velocityY = -GAME_CONFIG.player.jumpPower * 1.5; // Pulo alto
+                this.onGround = false;
+                playSound('jump');
+            }
+        }
 
         // Aplicar gravidade
         this.velocityY += GAME_CONFIG.player.gravity;
@@ -103,33 +107,18 @@ class Player {
     draw() {
         ctx.save();
 
-        // Desenhar sombra
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
-        ctx.fillRect(this.x + 2, this.y + this.height + 2, this.width - 4, 4);
-
-        // Desenhar personagem (Mario simplificado)
-        ctx.fillStyle = '#FF0000'; // Chapéu vermelho
-        ctx.fillRect(this.x + 8, this.y, 16, 8);
-
-        ctx.fillStyle = '#FFDBAC'; // Rosto
-        ctx.fillRect(this.x + 6, this.y + 8, 20, 12);
-
-        ctx.fillStyle = '#0000FF'; // Camisa azul
-        ctx.fillRect(this.x + 4, this.y + 20, 24, 8);
-
-        ctx.fillStyle = '#8B4513'; // Calça marrom
-        ctx.fillRect(this.x + 6, this.y + 28, 20, 4);
-
-        // Olhos
-        ctx.fillStyle = '#000000';
-        ctx.fillRect(this.x + 10, this.y + 10, 2, 2);
-        ctx.fillRect(this.x + 20, this.y + 10, 2, 2);
-
-        // Bigode
-        ctx.fillRect(this.x + 12, this.y + 14, 8, 2);
+        // Espelhar se estiver indo para a esquerda
+        if (this.direction === -1) {
+            ctx.translate(this.x + this.width, this.y);
+            ctx.scale(-1, 1);
+            ctx.drawImage(personagemSprite, 0, 0, this.width, this.height);
+        } else {
+            ctx.drawImage(personagemSprite, this.x, this.y, this.width, this.height);
+        }
 
         ctx.restore();
     }
+
 }
 
 // Classe dos itens coletáveis
@@ -468,13 +457,13 @@ function showScreen(screenId) {
 
 // Função para iniciar o jogo
 function startGame() {
-   
+
     gameState = 'playing';
     score = 0;
     level = 1;
     lives = 3;
 
-     const music = document.getElementById('background-music');
+    const music = document.getElementById('background-music');
     if (music) {
         music.currentTime = 0;
         music.volume = 0.1; // ⬅️ aqui você ajusta o volume (de 0.0 a 1.0)
@@ -564,23 +553,23 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Controle de som
-const toggleSoundBtn = document.getElementById('toggle-sound-btn');
-const bgMusic = document.getElementById('background-music');
-let isMuted = false;
+    const toggleSoundBtn = document.getElementById('toggle-sound-btn');
+    const bgMusic = document.getElementById('background-music');
+    let isMuted = false;
 
-toggleSoundBtn.addEventListener('click', () => {
-    if (!bgMusic) return;
+    toggleSoundBtn.addEventListener('click', () => {
+        if (!bgMusic) return;
 
-    isMuted = !isMuted;
+        isMuted = !isMuted;
 
-    if (isMuted) {
-        bgMusic.volume = 0;
-        toggleSoundBtn.textContent = '🔇';
-    } else {
-        bgMusic.volume = 0.3; // ou o volume desejado
-        toggleSoundBtn.textContent = '🔊';
-    }
-});
+        if (isMuted) {
+            bgMusic.volume = 0;
+            toggleSoundBtn.textContent = '🔇';
+        } else {
+            bgMusic.volume = 0.3; // ou o volume desejado
+            toggleSoundBtn.textContent = '🔊';
+        }
+    });
 
 });
 
