@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aventura Matemática na Mata</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Tela de início -->
+        <div id="start-screen" class="screen">
+            <h1>Aventura Matemática na Mata</h1>
+            <p>Ajude o Mario a encontrar os resultados corretos das multiplicações!</p>
+            <button id="start-button">Começar Aventura</button>
+            <div class="instructions">
+                <h3>Como Jogar:</h3>
+                <ul>
+                    <li>Use as setas do teclado para mover o personagem</li>
+                    <li>Encontre os números que representam o resultado da multiplicação</li>
+                    <li>Evite os números incorretos</li>
+                    <li>Colete moedas para ganhar pontos extras</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Tela do jogo -->
+        <div id="game-screen" class="screen hidden">
+            <!-- Interface do jogo -->
+            <div id="game-ui">
+                <div id="score">Pontuação: <span id="score-value">0</span></div>
+                <div id="level">Nível: <span id="level-value">1</span></div>
+                <div id="lives">Vidas: <span id="lives-value">3</span></div>
+                <div id="question">
+                    <span id="multiplication">2 × 3 = ?</span>
+                </div>
+            </div>
+
+            <!-- Canvas do jogo -->
+            <canvas id="game-canvas" width="800" height="400"></canvas>
+
+            <!-- Controles para dispositivos móveis -->
+            <div id="mobile-controls">
+                <button id="left-btn" class="control-btn">←</button>
+                <button id="right-btn" class="control-btn">→</button>
+                <button id="jump-btn" class="control-btn">Pular</button>
+            </div>
+        </div>
+
+        <!-- Tela de game over -->
+        <div id="game-over-screen" class="screen hidden">
+            <h2>Fim de Jogo!</h2>
+            <p>Sua pontuação final: <span id="final-score">0</span></p>
+            <p id="game-over-message">Continue praticando suas multiplicações!</p>
+            <button id="restart-button">Jogar Novamente</button>
+            <button id="menu-button">Menu Principal</button>
+        </div>
+
+        <!-- Tela de vitória -->
+        <div id="victory-screen" class="screen hidden">
+            <h2>Parabéns!</h2>
+            <p>Você completou o nível!</p>
+            <p>Pontuação: <span id="victory-score">0</span></p>
+            <button id="next-level-button">Próximo Nível</button>
+            <button id="menu-button-victory">Menu Principal</button>
+        </div>
+    </div>
+
+    <!-- Áudio (opcional) -->
+    <audio id="collect-sound" preload="auto">
+        <source src="sounds/collect.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="wrong-sound" preload="auto">
+        <source src="sounds/wrong.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="jump-sound" preload="auto">
+        <source src="sounds/jump.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,303 @@
+/* Reset e configurações básicas */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #4CAF50, #2E7D32);
+    overflow: hidden;
+    user-select: none;
+}
+
+/* Container principal do jogo */
+#game-container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Estilos das telas */
+.screen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    text-align: center;
+    padding: 20px;
+    transition: opacity 0.5s ease;
+}
+
+.screen.hidden {
+    display: none;
+}
+
+/* Tela de início */
+#start-screen h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: #FFD700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    animation: pulse 2s infinite;
+}
+
+#start-screen p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    max-width: 600px;
+}
+
+.instructions {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 30px;
+    max-width: 500px;
+}
+
+.instructions h3 {
+    color: #FFD700;
+    margin-bottom: 15px;
+}
+
+.instructions ul {
+    text-align: left;
+    list-style-position: inside;
+}
+
+.instructions li {
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+/* Botões */
+button {
+    background: linear-gradient(45deg, #FF6B35, #F7931E);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+    margin: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(45deg, #F7931E, #FF6B35);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* Interface do jogo */
+#game-ui {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    z-index: 10;
+}
+
+#question {
+    font-size: 1.5rem;
+    color: #FFD700;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+#score, #level, #lives {
+    font-size: 1.1rem;
+}
+
+/* Canvas do jogo */
+#game-canvas {
+    border: 3px solid #2E7D32;
+    border-radius: 10px;
+    background: #87CEEB;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    display: block;
+    margin: 60px auto 0;
+}
+
+/* Controles móveis */
+#mobile-controls {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 15px;
+    z-index: 10;
+}
+
+.control-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    font-weight: bold;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid white;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    touch-action: manipulation;
+}
+
+.control-btn:active {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(0.95);
+}
+
+/* Telas de fim de jogo e vitória */
+#game-over-screen h2,
+#victory-screen h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #FFD700;
+}
+
+#game-over-screen p,
+#victory-screen p {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+/* Animações */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    #start-screen h1 {
+        font-size: 2rem;
+    }
+    
+    #game-canvas {
+        width: 95vw;
+        height: 50vh;
+        margin-top: 80px;
+    }
+    
+    #game-ui {
+        flex-wrap: wrap;
+        gap: 10px;
+        font-size: 0.9rem;
+    }
+    
+    #question {
+        font-size: 1.2rem;
+        width: 100%;
+        text-align: center;
+        margin-top: 5px;
+    }
+    
+    .instructions {
+        font-size: 0.8rem;
+        max-width: 90%;
+    }
+    
+    button {
+        padding: 12px 25px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    #start-screen h1 {
+        font-size: 1.5rem;
+    }
+    
+    #game-canvas {
+        height: 45vh;
+    }
+    
+    .control-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1rem;
+    }
+}
+
+/* Efeitos visuais para elementos do jogo */
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #FFD700;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: particle-float 1s ease-out forwards;
+}
+
+@keyframes particle-float {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.5);
+    }
+}
+
+/* Feedback visual */
+.correct-answer {
+    animation: correct-flash 0.5s ease;
+}
+
+.wrong-answer {
+    animation: wrong-flash 0.5s ease;
+}
+
+@keyframes correct-flash {
+    0%, 100% { background-color: transparent; }
+    50% { background-color: rgba(76, 175, 80, 0.3); }
+}
+
+@keyframes wrong-flash {
+    0%, 100% { background-color: transparent; }
+    50% { background-color: rgba(244, 67, 54, 0.3); }
+}
+
