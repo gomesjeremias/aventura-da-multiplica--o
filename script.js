@@ -10,6 +10,10 @@ let player = {};
 let keys = {};
 let animationId;
 
+
+
+
+
 const personagemSprite = new Image();
 personagemSprite.src = './assets/characters/personagem.png';
 
@@ -62,12 +66,13 @@ class Player {
 
         // Pulo
         if (this.onGround) {
-            if (keys['ArrowUp'] || keys['w']) {
+            if (keys['ArrowUp'] || keys['w'] || keys[' ']) {
+
                 this.velocityY = -GAME_CONFIG.player.jumpPower; // Pulo normal
                 this.onGround = false;
                 playSound('jump');
             } else if (keys['Shift']) {
-                this.velocityY = -GAME_CONFIG.player.jumpPower * 1.5; // Pulo alto
+                this.velocityY = -GAME_CONFIG.player.jumpPower * 1.6; // Pulo alto
                 this.onGround = false;
                 playSound('jump');
             }
@@ -515,21 +520,52 @@ document.addEventListener('DOMContentLoaded', function () {
     canvas = document.getElementById('game-canvas');
     ctx = canvas.getContext('2d');
 
+    //   deixar tela cheia
+    const fullscreenCanvasBtn = document.getElementById('fullscreen-canvas-btn');
+    const canvasElement = document.getElementById('game-canvas');
+
+    fullscreenCanvasBtn.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+            const gameContainer = document.getElementById('game-screen');
+            gameContainer.requestFullscreen().catch(err => {
+                console.error(`Erro ao entrar em tela cheia: ${err.message}`);
+            });
+
+        } else {
+            document.exitFullscreen();
+        }
+    });
+
+
+
     // Ajustar canvas para dispositivos móveis
     function resizeCanvas() {
-        const container = document.getElementById('game-container');
-        const maxWidth = Math.min(800, window.innerWidth - 40);
-        const maxHeight = Math.min(400, window.innerHeight - 200);
+        const isFullscreen = !!document.fullscreenElement;
 
-        canvas.width = maxWidth;
-        canvas.height = maxHeight;
+        const margin = 40;
+        const topUI = 80;
+        const availableWidth = Math.max(window.innerWidth - 40, 300);
+        const availableHeight = Math.max(window.innerHeight - 100, 200);
 
-        GAME_CONFIG.canvas.width = maxWidth;
-        GAME_CONFIG.canvas.height = maxHeight;
+        const ratio = 2; // largura:altura ideal (800/400 = 2)
+
+        let width = availableWidth;
+        let height = width / ratio;
+
+        if (height > availableHeight) {
+            height = availableHeight;
+            width = height * ratio;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+
+
     }
 
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
+
 
     // Botões
     document.getElementById('start-button').addEventListener('click', startGame);
@@ -571,24 +607,25 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-});
 
-// Controles do teclado
-document.addEventListener('keydown', function (e) {
-    keys[e.key] = true;
+    // Controles do teclado
+    document.addEventListener('keydown', function (e) {
+        keys[e.key] = true;
 
-    // Prevenir scroll da página
-    if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) {
+        // Prevenir scroll da página
+        if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) {
+            e.preventDefault();
+        }
+    });
+
+    document.addEventListener('keyup', function (e) {
+        keys[e.key] = false;
+    });
+
+    // Prevenir menu de contexto no canvas
+    document.getElementById('game-canvas').addEventListener('contextmenu', function (e) {
         e.preventDefault();
-    }
-});
+    });
 
-document.addEventListener('keyup', function (e) {
-    keys[e.key] = false;
-});
-
-// Prevenir menu de contexto no canvas
-document.getElementById('game-canvas').addEventListener('contextmenu', function (e) {
-    e.preventDefault();
 });
 

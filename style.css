@@ -8,8 +8,20 @@
 body {
     font-family: 'Arial', sans-serif;
     background: linear-gradient(135deg, #4CAF50, #2E7D32);
-    overflow: hidden;
+    overflow: auto; /* ✅ Corrigido */
     user-select: none;
+    height: 100vh;
+}
+
+
+#start-screen {
+    z-index: 1000 !important;
+    pointer-events: auto;
+}
+#start-button {
+    z-index: 1001 !important;
+    pointer-events: auto;
+    position: relative;
 }
 
 /* Container principal do jogo */
@@ -148,15 +160,16 @@ button:active {
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: 15px;
+    gap: 20px;
     z-index: 10;
+    flex-wrap: nowrap;
 }
 
 .control-btn {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: bold;
     background: rgba(255, 255, 255, 0.2);
     border: 2px solid white;
@@ -165,12 +178,14 @@ button:active {
     justify-content: center;
     align-items: center;
     touch-action: manipulation;
+    backdrop-filter: blur(5px);
 }
 
 .control-btn:active {
     background: rgba(255, 255, 255, 0.4);
     transform: scale(0.95);
 }
+
 
 /* Telas de fim de jogo e vitória */
 #game-over-screen h2,
@@ -200,6 +215,50 @@ button:active {
     transform: scale(1.2);
 }
 
+#fullscreen-canvas-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+    padding: 5px;
+    transition: transform 0.2s ease;
+}
+
+#fullscreen-canvas-btn img {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) invert(1); /* ícone branco */
+}
+
+#fullscreen-canvas-btn:hover {
+    transform: scale(1.2);
+}
+
+#fullscreen-canvas-btn {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    background: rgba(0,0,0,0.6);
+    border: none;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
+    z-index: 20;
+}
+
+#fullscreen-canvas-btn img {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) invert(1); /* deixa o ícone branco */
+}
+
+#fullscreen-canvas-btn:hover {
+    transform: scale(1.2);
+    background: rgba(0,0,0,0.8);
+}
+
+
 /* Animações */
 @keyframes pulse {
     0%, 100% {
@@ -223,6 +282,12 @@ button:active {
 }
 
 /* Responsividade */
+@media (min-width: 1025px) {
+    #mobile-controls {
+        display: none !important;
+    }
+}
+
 @media (max-width: 768px) {
     #start-screen h1 {
         font-size: 2rem;
@@ -238,13 +303,19 @@ button:active {
         flex-wrap: wrap;
         gap: 10px;
         font-size: 0.9rem;
+        paddding: 10px;
     }
     
-    #question {
-        font-size: 1.2rem;
+     #question {
         width: 100%;
         text-align: center;
         margin-top: 5px;
+    }
+
+     #game-canvas {
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
     }
     
     .instructions {
@@ -255,6 +326,12 @@ button:active {
     button {
         padding: 12px 25px;
         font-size: 1rem;
+    }
+
+    .control-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
     }
 }
 
@@ -268,9 +345,13 @@ button:active {
     }
     
     .control-btn {
-        width: 50px;
-        height: 50px;
+        width: 40px;
+        height: 40px;
         font-size: 1rem;
+    }
+    #fullscreen-canvas-btn {
+        bottom: 10px;
+        right: 10px;
     }
 }
 
