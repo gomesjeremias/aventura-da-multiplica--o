@@ -28,7 +28,7 @@ const GAME_CONFIG = {
         width: 32,
         height: 32,
         speed: 3,
-        jumpPower: 12,
+        jumpPower: 14,
         gravity: 0.5
     },
     item: {
