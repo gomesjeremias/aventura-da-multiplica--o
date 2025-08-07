@@ -186,6 +186,20 @@ button:active {
     margin-bottom: 15px;
 }
 
+#toggle-sound-btn {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: transform 0.2s ease;
+}
+
+#toggle-sound-btn:hover {
+    transform: scale(1.2);
+}
+
 /* Animações */
 @keyframes pulse {
     0%, 100% {
