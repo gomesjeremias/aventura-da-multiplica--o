@@ -259,13 +259,24 @@ function generateAnswerOptions() {
 }
 
 // Função para desenhar o fundo
+
+const backgroundImage = new Image();
+backgroundImage.src = './assets/backgrounds/jungle_background_2.jpg'; // Verifique se o caminho está certo!
+let backgroundLoaded = false;
+
+backgroundImage.onload = () => {
+    backgroundLoaded = true;
+};
+
 function drawBackground() {
-    // Céu
-    const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-    gradient.addColorStop(0, '#87CEEB');
-    gradient.addColorStop(1, '#98FB98');
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    if (backgroundLoaded) {
+        ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+    } else {
+        // Fallback: desenha um fundo colorido enquanto a imagem carrega
+        ctx.fillStyle = '#87CEEB';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
     
     // Nuvens
     ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
