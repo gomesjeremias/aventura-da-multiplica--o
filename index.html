@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aventura Matemática na Mata</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div id="game-container">
         <!-- Tela de início -->
@@ -30,20 +32,27 @@
             <div id="game-ui">
                 <button id="toggle-sound-btn" title="Ativar/Desativar Som">🔊</button>
                 
+
+
                 <div id="score">Pontuação: <span id="score-value">0</span></div>
                 <div id="level">Nível: <span id="level-value">1</span></div>
                 <div id="lives">Vidas: <span id="lives-value">3</span></div>
                 <div id="question">
                     <span id="multiplication">2 × 3 = ?</span>
-                   
+
                 </div>
-                
+
             </div>
 
             <!-- Canvas do jogo -->
             <canvas id="game-canvas" width="800" height="400">
-                 
+
             </canvas>
+
+            <!-- Botao tela cheia -->
+            <button id="fullscreen-canvas-btn" title="Tela Cheia">
+                    <img src="assets/items/icons8-tela-cheia-24.png" alt="Tela Cheia" />
+                </button>
 
             <!-- Controles para dispositivos móveis -->
             <div id="mobile-controls">
@@ -86,10 +95,10 @@
         <source src="./assets/jump sound.mp3" type="audio/mp3">
     </audio>
     <audio id="background-music" loop autoplay preload="auto">
-    <source src="./assets/som de fundo.mp3" type="audio/mpeg">
-</audio>
+        <source src="./assets/som de fundo.mp3" type="audio/mpeg">
+    </audio>
 
     <script src="script.js"></script>
 </body>
-</html>
 
+</html>
